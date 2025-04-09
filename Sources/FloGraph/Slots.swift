@@ -165,7 +165,7 @@ extension ParsedExpr: Slot.Value{}
 // MARK: F2
 public typealias F2 = SIMD2<Float32>
 /* DO NOT ADD @Retroactive !! not compatible with RPi */
-extension F2 : IO™,Slot.Value{
+extension F2 : @retroactive IO™,Slot.Value{
     public func ™(_ Ω:IO){ x.™(Ω); y.™(Ω) }
     public var bytes:[UInt8]{ return x.bytes + y.bytes }
     public static func ™(_ bytes:[UInt8])throws->F2{
@@ -181,7 +181,7 @@ extension F2 : IO™,Slot.Value{
 // MARK: F3
 public typealias F3 = SIMD3<Float32>
 /* DO NOT ADD @Retroactive !! not compatible with RPi */
-extension F3 : IO™,Slot.Value{
+extension F3 : @retroactive IO™,Slot.Value{
     public static let defaultPOV = F3(0,0,1) // IMPORTANT: zom > 0 !!
     public func ™(_ Ω:IO){ x.™(Ω); y.™(Ω); z.™(Ω) }
     public static func ™(_ Ω:IO)throws->F3{
@@ -191,7 +191,7 @@ extension F3 : IO™,Slot.Value{
 // MARK: F4
 public typealias F4 = SIMD4<Float32>
 /* DO NOT ADD @Retroactive !! not compatible with RPi */
-extension F4 : IO™,Slot.Value{
+extension F4 : @retroactive IO™,Slot.Value{
     public static var random:F4{
         return F4(
             Float32.random(in:0...1),
@@ -209,7 +209,7 @@ extension F4 : IO™,Slot.Value{
 // MARK: Int64
 private let _shift64 = [0,8,16,24,32,40,48,56]
 /* DO NOT ADD @Retroactive !! not compatible with RPi */
-extension Int64:IO™{
+extension Int64:@retroactive IO™{
     public func ™(_ Ω:IO){
         Ω.write( _shift64.map{ UInt8(truncatingIfNeeded:self>>$0) } )
     }
@@ -221,7 +221,7 @@ extension Int64:IO™{
 
 // MARK: TIMESTAMP
 /* DO NOT ADD @Retroactive !! not compatible with RPi */
-extension Float64:IO™{
+extension Float64:@retroactive IO™{
     public func ™(_ Ω:IO){ bitPattern.™(Ω) }
     public static func ™(_ Ω:IO)throws->Float64{
         Float64(bitPattern:try UInt64.™(Ω))
